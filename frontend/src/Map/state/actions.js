@@ -10,6 +10,7 @@ import { dataApi } from "../utils/api";
 };
 
 const mapDataSuccess = (response) => {
+  console.log("called",response)
   return {
     type: mapDataConstants.GET_DATA_SUCCESS,
     mapData: response.data.data,
@@ -18,6 +19,7 @@ const mapDataSuccess = (response) => {
 };
 
 const getData = () => {
+  
   return (dispatch, getState) => {
     dataApi
       .mapDataRequest()

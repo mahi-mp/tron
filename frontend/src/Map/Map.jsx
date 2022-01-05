@@ -30,32 +30,35 @@ function Map() {
     });
   };
 
+  console.log("mapData", mapData);
   return (
     <div className={styles.mapAlignment}>
-      <MapContainer
-        zoom={13}
-        center={[53.54421, 9.91835]}
-        style={{ height: "420px", width: "100%" }}
-        onClick={addMarker}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {mapData.map((element, index) => (
-          <Marker
-            key={index}
-            marker_index={index}
-            position={[element.coordinates[1], element.coordinates[0]]}
-            draggable={true}
-            onDragend={updateMarker}
-          >
-            <Popup>
-              {element.property}. <br /> {element.status}.
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+      {mapData && (
+        <MapContainer
+          zoom={13}
+          center={[53.54421, 9.91835]}
+          style={{ height: "420px", width: "100%" }}
+          onClick={addMarker}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {mapData.map((element, index) => (
+            <Marker
+              key={index}
+              marker_index={index}
+              position={[element.coordinates[1], element.coordinates[0]]}
+              draggable={true}
+              onDragend={updateMarker}
+            >
+              <Popup>
+                {element.property}. <br /> {element.status}.
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      )}
     </div>
   );
 }

@@ -8,25 +8,34 @@ app.use(cors());
 
 let data=require("../Server/desk-now-hosts/hosts.json")
 let bookingData=require("../Server/desk-now-bookings/bookings.json")
-// let nJwt = require("njwt");
-// let secureRandom = require("secure-random");
 
 const MongoClient = require("mongodb").MongoClient;
 
 // Connection URL
-const url = "mongodb+srv://desknow:desknow@mongodb.129ey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const url = "mongodb+srv://desknow:desknow@cluster0.f8zlp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const url = "mongodb+srv://desknow:desknow@mongodb.129ey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 // Database Name
 const dbName = "desknow";
 
 // Create a new MongoClient
-const client = new MongoClient(url);
+const client = new MongoClient(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 
 let db;
 
 // Use connect method to connect to the Server
 client.connect(function (err) {
   db = client.db(dbName);
+  console.log("err",err)
+});
+
+// Get Host data
+app.get("/host", function (req, res, next) {
+  db.collection("host")
+    .find({})
+    .toArray((err, response) => {
+      res.json({ data: response });
+    });
 });
 
 // booking data migration
@@ -59,14 +68,7 @@ app.post("/host", function (req, res, next) {
   );
 });
 
-// Get Host data
-app.get("/host", function (req, res, next) {
-  db.collection("host")
-    .find({})
-    .toArray((err, response) => {
-      res.json({ data: response });
-    });
-});
+
 
 
 // Get booking data
