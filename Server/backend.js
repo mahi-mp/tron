@@ -26,7 +26,6 @@ let db;
 // Use connect method to connect to the Server
 client.connect(function (err) {
   db = client.db(dbName);
-  console.log("err",err)
 });
 
 // Get Host data

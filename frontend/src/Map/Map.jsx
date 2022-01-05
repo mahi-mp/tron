@@ -30,7 +30,6 @@ function Map() {
     });
   };
 
-  console.log("mapData", mapData);
   return (
     <div className={styles.mapAlignment}>
       {mapData && (
