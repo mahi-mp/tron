@@ -2,7 +2,8 @@
 
 ## Pre-Requisite
 1)mongodb should be installed
-1)node should be installed
+
+2)node should be installed
 
 
 In the project directory, you can run:
