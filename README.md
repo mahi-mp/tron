@@ -4,7 +4,7 @@
 
 In the project directory, you can run:
 
-### Step1 `npm run devinstall`
+### Step1 `npm install -g concurrently`
 
 Before starting the script please install this package
 
