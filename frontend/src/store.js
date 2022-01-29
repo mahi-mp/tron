@@ -1,9 +1,13 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { map } from "./Map";
+import {authenticate} from "./Authenticate"
+import { home } from "./Home";
+import { profileDetails } from "./ProfileDetails";
 
 const reducers = {
-  map,
+  home,
+  authenticate,
+  profileDetails
 };
 
 const rootReducers = combineReducers(reducers);

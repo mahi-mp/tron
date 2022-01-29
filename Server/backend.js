@@ -1,25 +1,21 @@
-
 let express = require("express");
 let bodyParser = require("body-parser");
+var ObjectId = require('mongodb').ObjectId; 
 let app = express();
 app.use(bodyParser.json());
 let cors = require("cors");
 app.use(cors());
 
-let data=require("../Server/desk-now-hosts/hosts.json")
-let bookingData=require("../Server/desk-now-bookings/bookings.json")
-
 const MongoClient = require("mongodb").MongoClient;
 
 // Connection URL
-const url = "mongodb+srv://desknow:desknow@cluster0.f8zlp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const url = "mongodb+srv://desknow:desknow@mongodb.129ey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const url = "mongodb://localhost:27017";
 
 // Database Name
-const dbName = "desknow";
+const dbName = "trons";
 
 // Create a new MongoClient
-const client = new MongoClient(url,{ useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(url);
 
 let db;
 
@@ -28,57 +24,114 @@ client.connect(function (err) {
   db = client.db(dbName);
 });
 
-// Get Host data
-app.get("/host", function (req, res, next) {
-  db.collection("host")
-    .find({})
+// Signup
+app.post("/signup", function (req, res, next) {
+  let { email, password,phoneNumber } = req.body;
+
+  db.collection("users").insertOne(
+    {
+      username: email,
+      email: email,
+      password: password,
+      phoneNumber:phoneNumber
+    },
+    (err, response) => {
+      if (err) res.send({ flag: false, message: "User not registered" });
+      res.json({
+        status: {
+          username: email,
+          token: response.insertedId
+        },
+      });
+    }
+  );
+});
+
+// Login
+app.post("/login", function (req, res, next) {
+  let { email, password } = req.body;
+  db.collection("users")
+    .find({ email: email, password: password })
     .toArray((err, response) => {
-      res.json({ data: response });
+      if (response.length > 0) {
+        res.json({
+          status: {
+            username: email,
+            data:response[0],
+            flag: true,
+          },
+        });
+      } else {
+        res.json({
+          status: {
+            message: "Not Found",
+            flag: false,
+          },
+        });
+      }
     });
 });
 
-// booking data migration
-app.post("/booking", function (req, res, next) {
-  db.collection("booking").insertMany(
-    bookingData.poiList,
+// profile
+app.post("/profile", function (req, res, next) {
+  let { firstName, phoneNumber,lastName,time,userId,selectedDtate } = req.body;
+  db.collection("usersProfile").insertOne(
+    {
+      firstName: firstName,
+      phoneNumber: phoneNumber,
+      lastName: lastName,
+      time:time,
+      userId:userId,
+      selectedDtate:selectedDtate
+    },
     (err, response) => {
-      if (err) res.send({ flag: false, message: "booking data not available" });
+      if (err) res.send({ flag: false, message: "User not registered" });
       res.json({
         status: {
           username: response,
+          flag:true
         },
       });
     }
   );
 });
 
-// host data migration
-app.post("/host", function (req, res, next) {
-  db.collection("host").insertMany(
-    data.placemarks,
+//Edit profile
+app.put("/editProfile", function (req, res, next) {
+  let { firstName, phoneNumber,lastName,time,selectedDtate,updatedBy,recordId } = req.body;
+  var o_id = new ObjectId(recordId);
+  db.collection("usersProfile").findOneAndUpdate({_id:o_id},
+    {$set:{
+      firstName: firstName,
+      phoneNumber: phoneNumber,
+      lastName: lastName,
+      time:time,
+      updatedBy:updatedBy,
+      selectedDtate:selectedDtate
+    }
+    },
     (err, response) => {
-      if (err) res.send({ flag: false, message: "Host data not available" });
+      if (err) res.send({ flag: false, message: "User not registered" });
       res.json({
         status: {
           username: response,
+          flag:true
         },
       });
     }
   );
 });
 
-
-
-
-// Get booking data
-app.get("/booking", function (req, res, next) {
-  db.collection("booking")
-    .find({})
+// get profile
+app.get("/profileData", function (req, res, next) {
+  let {data} = req.query;
+  db.collection("usersProfile")
+    .find({selectedDtate:data})
     .toArray((err, response) => {
       res.json({ data: response });
     });
 });
 
 app.listen(3002, () => {
-  console.log("Listening on port 3002.");
+  console.log("Listening on port 3002");
 });

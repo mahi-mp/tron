@@ -1,7 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Map } from "../Map";
-import "./styles/App.css";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { Authenticate } from "../Authenticate";
+import { UserSignUp } from "../Authenticate/components/UserSignUp";
+import { Error404 } from "../Common/components/Error404";
+import "./styles/App.module.css";
+import { Home } from "../Home";
+import { ProfileDetails } from "../ProfileDetails";
 
 /**
  * @function App
@@ -14,7 +24,34 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Map />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profileDetails/:timeStamp"
+          element={
+            <PrivateRoute>
+              <ProfileDetails />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/editProfileDetails/:timeStamp"
+          element={
+            <PrivateRoute>
+              <ProfileDetails />
+            </PrivateRoute>
+          }
+        />
+        <Route exact path="/login" element={<Authenticate />} />
+        <Route exact path="/signup" element={<UserSignUp />} />
+        <Route exact path="/error" element={<Error404 />} />
+        <Route path="*" element={<Navigate replace to="/error" />} />
       </Routes>
     </Router>
   );

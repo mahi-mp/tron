@@ -1,0 +1,104 @@
+#components-form-demo-normal-login .loginForm {
+  max-width: 300px;
+}
+#components-form-demo-normal-login .login-form-forgot {
+  float: right;
+}
+#components-form-demo-normal-login .ant-col-rtl .loginFormForgot {
+  float: left;
+}
+#components-form-demo-normal-login .loginFormButton {
+  width: 100%;
+}
+
+.alignAdmin {
+  background-image: url(https://i.pinimg.com/originals/bb/98/55/bb9855e4ce31410e9289453ddb447ceb.jpg);
+  background-position: top center;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  background-repeat: no-repeat;
+  background-color: #444;
+  position: relative;
+  overflow-x: hidden;
+  z-index: 0;
+}
+
+/* .alignAdmin:after {
+  content: "";
+  background-color: #032345;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+} */
+
+.loginAlignment {
+  position: absolute !important;
+  opacity: 1.5;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.Loginlogo {
+  width: 60px;
+  margin: 10px auto;
+  display: block;
+}
+
+.custFormH1 {
+  font-size: 42px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  color: #404b51;
+  text-align: center;
+  line-height: 55px;
+  margin-bottom: 10px;
+}
+
+.btnPrimary {
+  display: block !important;
+  width: 100%;
+  /* margin-bottom: 15px; */
+  text-transform: uppercase;
+  /* padding: 10px 20px; */
+  border-radius: 30px !important;
+}
+
+.custFormH2 {
+  font-size: 28px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #8e959a;
+  text-align: center;
+  line-height: 37px;
+  margin-bottom: 10px;
+}
+
+.custForm {
+  background-color: #fff;
+  width: 550px;
+  max-width: 90%;
+  /* margin: 70px auto; */
+  display: block;
+  min-height: 300px;
+  box-shadow: 0 0 8px #6c6969;
+  /* padding: 40px 50px; */
+  border-top: 8px solid #dbdfe3;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  position: absolute !important;
+  opacity: 1.5;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
